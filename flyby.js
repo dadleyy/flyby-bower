@@ -1,5 +1,5 @@
 (function() {
-  var CHAR_ENCODINGS, DEFAULT_ACTIONS, DEFAULT_HEADERS, Flyby, MEMBER_NAME_REGEX, defaultRequestTransform, defaultResponseTransform, fn, headerGetterFactory, isBlob, isFile, isFormData, isFunction, isObject, isSuccess, replacementFactory, toJson, toString, typeCheck, validDottedPath,
+  var CHAR_ENCODINGS, DEFAULT_ACTIONS, DEFAULT_HEADERS, Flyby, MEMBER_NAME_REGEX, defaultRequestTransform, defaultResponseTransform, fn, headerGetterFactory, isArray, isBlob, isFile, isFormData, isFunction, isObject, isString, isSuccess, replacementFactory, toJson, toString, typeCheck, validDottedPath,
     slice = [].slice;
 
   DEFAULT_ACTIONS = {
@@ -45,6 +45,10 @@
     return /object/i.test(typeof x);
   };
 
+  isString = function(x) {
+    return /string/i.test(typeof x);
+  };
+
   typeCheck = function(tester) {
     return function(x) {
       return ((toString.call(x)).match(tester)) !== null;
@@ -56,6 +60,8 @@
   isBlob = typeCheck(/\[object\sblob\]/i);
 
   isFormData = typeCheck(/\[object\sformdata\]/i);
+
+  isArray = typeCheck(/\[object\sarray\]/i);
 
   toJson = function(x) {
     return JSON.stringify(x);
@@ -176,24 +182,43 @@
       }
       return data;
     },
-    extractObjectMappings: function(data, mappings) {
-      var data_val, m, result, v;
+    extractObjectMappings: function(data, mappings, mapped) {
+      var m, result, search, v;
       if (data == null) {
         data = {};
       }
       if (mappings == null) {
         mappings = {};
       }
+      if (mapped == null) {
+        mapped = [];
+      }
       result = {};
+      search = function(keys) {
+        var found, key;
+        found = void 0;
+        keys = keys.slice(0);
+        key = null;
+        while (found === void 0 && keys.length > 0) {
+          key = keys.shift();
+          if ((key.charAt(0)) !== "@") {
+            continue;
+          }
+          found = fn.lookupDotted(data, key.slice(1));
+        }
+        mapped.push(key.slice(1));
+        return found;
+      };
       for (m in mappings) {
         v = mappings[m];
-        if ((typeof v === "string") && (v.charAt(0)) === "@") {
-          data_val = fn.lookupDotted(data, v.slice(1));
-          if (data_val) {
-            result[m] = data_val;
-          }
+        if (isArray(v)) {
+          result[m] = search(v);
         }
-        if (typeof v === "function") {
+        if ((isString(v)) && (v.charAt(0)) === "@") {
+          mapped.push(v.slice(1));
+          result[m] = fn.lookupDotted(data, v.slice(1));
+        }
+        if (isFunction(v)) {
           result[m] = v(data);
         }
       }
@@ -302,16 +327,9 @@
       has_body = action_config.has_body === true;
       transforms = action_config.transform || {};
       handler = function(data, callback) {
-        var body_data, error, headers, k, key, leftover, loaded, mapping_data, mapping_keys, query_str, request_url, value, xhr;
-        mapping_data = fn.extractObjectMappings(data, action_mappings);
-        mapping_keys = (function() {
-          var results;
-          results = [];
-          for (k in mapping_data) {
-            results.push(k);
-          }
-          return results;
-        })();
+        var body_data, error, headers, key, leftover, loaded, mapping_data, mapping_keys, query_str, request_url, value, xhr;
+        mapping_keys = [];
+        mapping_data = fn.extractObjectMappings(data, action_mappings, mapping_keys);
         leftover = fn.omit(data, mapping_keys);
         query_str = fn.queryString(leftover);
         request_url = fn.transformUrl(action_url, mapping_data);
