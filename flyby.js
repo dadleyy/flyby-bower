@@ -322,6 +322,9 @@
         }
         for (key in headers) {
           value = headers[key];
+          if (isFunction(value)) {
+            value = value(data);
+          }
           if (value !== void 0) {
             xhr.setRequestHeader(key, value);
           }
