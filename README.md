@@ -1,4 +1,8 @@
-# Flyby
+![flyby](https://cloud.githubusercontent.com/assets/1545348/11257186/20d50508-8e1e-11e5-991b-81dd93af4231.png)
+
+[![Build Status](https://travis-ci.org/dadleyy/flyby.svg?branch=reorg_1)](https://travis-ci.org/dadleyy/flyby) [![Bower version](https://badge.fury.io/bo/flyby.svg)](https://badge.fury.io/bo/flyby)
+
+### [Bower Repo](https://github.com/dadleyy/flyby-bower) | [Source Repo](https://github.com/dadleyy/flyby)
 
 A lightweight library for mapping client-side interactions to server-side apis. The project was heavily influenced by angular's [ngResource](https://github.com/angular/angular.js/blob/master/src/ngResource/resource.js), and was originally built to bring the functionality out of the framework, allowing non-angular applications to use it's interface.
 
@@ -66,39 +70,39 @@ Each of these actions are objects based on this model:
   </thead>
   <tbody>
     <tr>
-      <td>`url`</td>
+      <td>url</td>
       <td>string</td>
       <td>the original url template</td>
-      <td>If this property is left blank (or not a `string`) the action will "inherit" the url from the resource. See [customizing action urls](#customizing_action_urls).</td>
+      <td>If this property is left blank (or not a string) the action will "inherit" the url from the resource. See <a href="#customizing_action_urls">customizing action urls</a>.</td>
     </tr>
     <tr>
-      <td>`method`</td>
+      <td>method</td>
       <td>string</td>
-      <td>`GET`</td>
+      <td>GET</td>
       <td>This is the http verb that the resource will use for the action's request.</td>
     </tr>
     <tr>
-      <td>`has_body`</td>
+      <td>has_body</td>
       <td>boolean</td>
-      <td>`false`</td>
+      <td>false</td>
       <td>Lets the factory know if it should use the data sent into it as query string information or request body data.</td>
     </tr>
     <tr>
-      <td>`params`</td>
+      <td>params</td>
       <td>object</td>
       <td>none</td>
-      <td>Allows the action to override the resource's default [url mappings](#url_mappings).</td>
+      <td>Allows the action to override the resource's default <a href="#url_mappings">url mappings</a>.</td>
     </tr>
     <tr>
-      <td>`transform.response`</td>
-      <td>`function`</td>
-      <td>[default response transform](#transforms)</td>
+      <td>transform.response</td>
+      <td>function</td>
+      <td><a href="#transforms">default response transform</a></td>
       <td>This function gets called once the xhr has finished successfully, allowing users to manipulate their data before it is used by the callee.</td>
     </tr>
     <tr>
-      <td>`transform.response`</td>
-      <td>`function`</td>
-      <td>[default response transform](#transforms)</td>
+      <td>transform.response</td>
+      <td>function</td>
+      <td><a href="#transforms">default response transform</a></td>
       <td>Allows users to override the function applied to the data before it is sent into the xhr.</td>
     </tr>
   </tbody>
