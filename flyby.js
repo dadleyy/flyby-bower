@@ -148,6 +148,10 @@
   };
 
   fn = {
+    upper: function(x) {
+      var ref;
+      return (ref = typeof x.toUpperCase === "function" ? x.toUpperCase() : void 0) != null ? ref : x;
+    },
     xhr: function() {
       return new window.XMLHttpRequest();
     },
@@ -320,14 +324,14 @@
 
     })();
     action = function(name, action_config) {
-      var action_mappings, action_url, handler, has_body, method, transforms;
+      var action_mappings, action_url, handler, has_body, method, ref, transforms;
       action_url = action_config.url || resource_url;
       action_mappings = fn.extend({}, url_mappings, action_config.params);
-      method = (action_config.method || "GET").toUpperCase();
+      method = fn.upper((ref = action_config.method) != null ? ref : "GET");
       has_body = action_config.has_body === true;
       transforms = action_config.transform || {};
       handler = function(data, callback) {
-        var body_data, error, headers, key, leftover, loaded, mapping_data, mapping_keys, query_str, request_url, value, xhr;
+        var body_data, error, headers, key, leftover, loaded, mapping_data, mapping_keys, query_str, ref1, request_method, request_url, value, xhr;
         mapping_keys = [];
         mapping_data = fn.extractObjectMappings(data, action_mappings, mapping_keys);
         leftover = fn.omit(data, mapping_keys);
@@ -336,7 +340,7 @@
         headers = fn.extend({}, DEFAULT_HEADERS, action_config.headers);
         xhr = fn.xhr();
         if (query_str !== null && !has_body) {
-          request_url = [request_url, query_str].join("?");
+          request_url = request_url + "?" + query_str;
         }
         for (key in headers) {
           value = headers[key];
@@ -347,7 +351,8 @@
             xhr.setRequestHeader(key, value);
           }
         }
-        xhr.open(method, request_url, true);
+        request_method = (ref1 = typeof method === "function" ? method(data) : void 0) != null ? ref1 : method;
+        xhr.open(request_method, request_url, true);
         loaded = function() {
           var response, result, status_code, status_text;
           status_text = xhr.statusText;
