@@ -1,10 +1,11 @@
 ![flyby](https://cloud.githubusercontent.com/assets/1545348/11257186/20d50508-8e1e-11e5-991b-81dd93af4231.png)
 
-[![Build Status](https://travis-ci.org/dadleyy/flyby.svg?branch=reorg_1)](https://travis-ci.org/dadleyy/flyby) [![Bower version](https://badge.fury.io/bo/flyby.svg)](https://badge.fury.io/bo/flyby)
+[![codecov](https://codecov.io/gh/dadleyy/flyby/branch/master/graph/badge.svg)](https://codecov.io/gh/dadleyy/flyby)
+[![Build Status](https://travis-ci.org/dadleyy/flyby.svg?branch=reorg_1)](https://travis-ci.org/dadleyy/flyby) [![Bower version](https://badge.fury.io/bo/flyby.svg)](https://badge.fury.io/bo/flyby) 
 
 ### [Bower Repo](https://github.com/dadleyy/flyby-bower) | [Source Repo](https://github.com/dadleyy/flyby)
 
-A lightweight library for mapping client-side interactions to server-side apis. The project was heavily influenced by angular's [ngResource](https://github.com/angular/angular.js/blob/master/src/ngResource/resource.js), and was originally built to bring the functionality out of the framework, allowing non-angular applications to use it's interface.
+A lightweight library for mapping client-side interactions to server-side apis. The project was heavily influenced by angular's [ngResource](https://github.com/angular/angular.js/blob/master/src/ngResource/resource.js), and was originally built to bring the functionality out of the framework as a micro-library that can be used as a part of any project.
 
 1. [usage](#usage)
 2. [installing](#installing)
@@ -13,7 +14,7 @@ A lightweight library for mapping client-side interactions to server-side apis. 
 <a name="usage"></a>
 ## Usage
 
-The `Flyby` interface can be thought of as a factory - it builds an interface that expose [actions](#actions) which provide semantically intuitive communication between client side data and server side apis.
+`Flyby` is a factory - it builds an interface that expose [actions](#actions) which provide semantically intuitive communication between client side data and server side apis.
 
 ### Defining a resource
 
@@ -21,9 +22,14 @@ The `Flyby` interface can be thought of as a factory - it builds an interface th
 
 param | type | details
 ----- | ----- | -----
-url template | string | the string used by the resource factory to generate the final url based on data sent into the api call. parameters in the template are 
-url mappings | object | in order for the factory to know how to...
-custom actions | object | an object that defines custom actions following the `action` interface defined below.
+url template | `string` | The string used by the resource factory to generate the final url based on data sent into the api call.
+url mappings | `object` | An object with key-value pairs used by the factory to map action input values to url parameters.
+custom actions | `object` | An object that defines custom actions following the `action` interface defined below.
+
+<a name="url_template"></a>
+**url template**
+
+The url template of a resource lets the resource build the uri that gets sent to the server.
 
 <a name="url_mappings"></a>
 **url mappings**
