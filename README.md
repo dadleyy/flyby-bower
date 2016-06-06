@@ -1,7 +1,7 @@
 ![flyby](https://cloud.githubusercontent.com/assets/1545348/11257186/20d50508-8e1e-11e5-991b-81dd93af4231.png)
 
 [![codecov](https://codecov.io/gh/dadleyy/flyby/branch/master/graph/badge.svg)](https://codecov.io/gh/dadleyy/flyby)
-[![Build Status](https://travis-ci.org/dadleyy/flyby.svg?branch=reorg_1)](https://travis-ci.org/dadleyy/flyby) [![Bower version](https://img.shields.io/bower/v/flyby.svg?maxAge=2592000)](https://github.com/dadleyy/flyby) 
+[![Build Status](https://travis-ci.org/dadleyy/flyby.svg?branch=reorg_1)](https://travis-ci.org/dadleyy/flyby) [![Bower version](https://img.shields.io/bower/v/flyby.svg?maxAge=10)](https://github.com/dadleyy/flyby) 
 
 ### [Bower Repo](https://github.com/dadleyy/flyby-bower) | [Source Repo](https://github.com/dadleyy/flyby)
 

@@ -331,7 +331,7 @@
       has_body = action_config.has_body === true;
       transforms = action_config.transform || {};
       handler = function(data, callback) {
-        var body_data, error, headers, key, leftover, loaded, mapping_data, mapping_keys, query_str, ref1, request_method, request_url, value, xhr;
+        var body_data, error, headers, key, leftover, loaded, mapping_data, mapping_keys, query_str, ref1, ref2, request_method, request_url, value, xhr;
         mapping_keys = [];
         mapping_data = fn.extractObjectMappings(data, action_mappings, mapping_keys);
         leftover = fn.omit(data, mapping_keys);
@@ -342,6 +342,8 @@
         if (query_str !== null && !has_body) {
           request_url = request_url + "?" + query_str;
         }
+        request_method = (ref1 = typeof method === "function" ? method(data) : void 0) != null ? ref1 : method;
+        xhr.open(request_method, request_url, true);
         for (key in headers) {
           value = headers[key];
           if (isFunction(value)) {
@@ -351,8 +353,6 @@
             xhr.setRequestHeader(key, value);
           }
         }
-        request_method = (ref1 = typeof method === "function" ? method(data) : void 0) != null ? ref1 : method;
-        xhr.open(request_method, request_url, true);
         loaded = function() {
           var response, result, status_code, status_text;
           status_text = xhr.statusText;
@@ -380,10 +380,7 @@
         if (!has_body) {
           return xhr.send();
         }
-        body_data = defaultRequestTransform(data);
-        if (isFunction(transforms.request)) {
-          body_data = transforms.request(data);
-        }
+        body_data = (ref2 = typeof transforms.request === "function" ? transforms.request(data) : void 0) != null ? ref2 : defaultRequestTransform(data);
         xhr.send(body_data);
         return true;
       };
