@@ -136,7 +136,7 @@
     }
     header = headerGetterFactory(header_string);
     content_type = header("content-type");
-    if (!content_type || !(content_type.match(/^application\/json$/i))) {
+    if (!content_type || !(content_type.match(/application\/json/i))) {
       return result;
     }
     try {
@@ -355,9 +355,8 @@
         }
         loaded = function() {
           var response, result, status_code, status_text;
-          status_text = xhr.statusText;
-          status_code = xhr.status;
-          response = xhr.response ? xhr.response : xhr.responseText;
+          status_code = xhr.status, status_text = xhr.statusText, response = xhr.response;
+          response || (response = xhr.responseText);
           headers = xhr.getAllResponseHeaders();
           result = defaultResponseTransform(response, headers);
           if (isFunction(transforms.response)) {

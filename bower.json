@@ -1,7 +1,7 @@
 {
   "name": "flyby",
   "description": "a lightweight, standalone library based on the angular ngresrouce service",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "main": "",
   "authors": [
     "Danny Hadley <dadley@sizethreestudios.com>"
