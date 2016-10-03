@@ -368,11 +368,11 @@
           }
         }
         loaded = function() {
-          var response, result, status_code, status_text;
+          var response, response_headers, result, status_code, status_text;
           status_code = xhr.status, status_text = xhr.statusText, response = xhr.response;
           response || (response = xhr.responseText);
-          headers = xhr.getAllResponseHeaders();
-          result = defaultResponseTransform(response, headers);
+          response_headers = xhr.getAllResponseHeaders();
+          result = defaultResponseTransform(response, response_headers);
           if (isFunction(transforms != null ? transforms.response : void 0)) {
             result = transforms.response(response);
           }
